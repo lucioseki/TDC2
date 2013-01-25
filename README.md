@@ -7,4 +7,4 @@ TDC2
 
 O arquivo tdc.h implementa as funções tdc e itdc, que realiza a transformada e a sua inversa, respectivamente.
 
-O arquivo test.c realiza testa estas funções com um vetor de 64 posições, simulando uma imagem 8 x 8.
+O arquivo test.c realiza testa estas funções com um vetor de 576 posições, simulando uma imagem 24 x 24.
