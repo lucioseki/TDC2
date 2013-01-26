@@ -1,3 +1,10 @@
+/*
+ * Compile com:
+ * gcc test.c tdc.c -lm
+ *
+ * */
+
+#include <malloc.h>
 #include "tdc.h"
 
 int main(){
