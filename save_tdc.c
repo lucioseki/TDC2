@@ -59,9 +59,9 @@ int main(int argc, char ** argv) {
 	fp = fopen(strcat(argv[1], "tdc"), "wb");
 	fwrite(&IMAGE_WIDTH, sizeof(int), 1, fp);
 	fwrite(&IMAGE_HEIGHT, sizeof(int), 1, fp);
-	fwrite(redtdc, sizeof(unsigned char), IMAGE_WIDTH * IMAGE_HEIGHT, fp);
-	fwrite(greentdc, sizeof(unsigned char), IMAGE_WIDTH * IMAGE_HEIGHT, fp);
-	fwrite(bluetdc, sizeof(unsigned char), IMAGE_WIDTH * IMAGE_HEIGHT, fp);
+	fwrite(redtdc, sizeof(float), IMAGE_WIDTH * IMAGE_HEIGHT, fp);
+	fwrite(greentdc, sizeof(float), IMAGE_WIDTH * IMAGE_HEIGHT, fp);
+	fwrite(bluetdc, sizeof(float), IMAGE_WIDTH * IMAGE_HEIGHT, fp);
 	fclose(fp);
 	
   return 0;

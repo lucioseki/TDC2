@@ -32,7 +32,7 @@ int main(int argc, char ** argv) {
 	float *greentdc;
 	float *bluetdc;
 
-  fp = fopen("lena512c.rawtdc","rb");
+  fp = fopen(argv[1],"rb");
 
 	// recupera as TDCs do arquivo
 	fread(&IMAGE_WIDTH, sizeof(int), 1, fp);
@@ -43,9 +43,9 @@ int main(int argc, char ** argv) {
 	greentdc = malloc(sizeof(float) * dim);
 	bluetdc = malloc(sizeof(float) * dim);
 
-	fread(redtdc, sizeof(unsigned char), dim, fp);
-	fread(greentdc, sizeof(unsigned char), dim, fp);
-	fread(bluetdc, sizeof(unsigned char), dim, fp);
+	fread(redtdc, sizeof(float), dim, fp);
+	fread(greentdc, sizeof(float), dim, fp);
+	fread(bluetdc, sizeof(float), dim, fp);
   fclose(fp);
 
 	unsigned char *reditdc = malloc(dim);
