@@ -63,6 +63,16 @@ int main(int argc, char ** argv) {
 	fwrite(greentdc, sizeof(float), IMAGE_WIDTH * IMAGE_HEIGHT, fp);
 	fwrite(bluetdc, sizeof(float), IMAGE_WIDTH * IMAGE_HEIGHT, fp);
 	fclose(fp);
+
+	free(reds);
+	free(greens);
+	free(blues);
+	
+	free(redtdc);
+	free(greentdc);
+	free(bluetdc);
+
+	free(image);
 	
   return 0;
 }

@@ -96,5 +96,13 @@ int main(int argc, char ** argv) {
 
   sleep(10);
   
+	free(redtdc);
+	free(greentdc);
+	free(bluetdc);
+
+	free(reditdc);
+	free(greenitdc);
+	free(blueitdc);
+
   return 0;
   }
