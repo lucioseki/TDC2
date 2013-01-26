@@ -1,5 +1,5 @@
 
-// gcc xdisplayraw.c -o xdisplayraw -lX11
+// gcc xdisplayraw.c tdc.c -o xdisplayraw -lX11
 // ./xdisplayraw lena512c.raw 512 512
 
 #include <stdio.h>
