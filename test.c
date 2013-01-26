@@ -1,5 +1,3 @@
-#include  <stdlib.h>
-#include  <assert.h>
 #include "tdc.h"
 
 int main(){
@@ -34,75 +32,13 @@ int main(){
 		40, 41, 42, 43, 44, 45, 46, 47, /**/ 48, 49, 50, 51, 52, 53, 54, 55, /**/ 56, 57, 58, 59, 60, 61, 62, 63
 	};
 
-	unsigned char *in = input;
 	float *out = malloc(sizeof(float) * sizeof(input));
 	unsigned char *inv = malloc(sizeof(input));
+	unsigned char *in = input;
 
-
-	// aplica tdc 
-	{
-		int i, j, k, l;
-
-		// quantidade de blocos 8 x 8
-		int numblocks = sizeof(input) / 64;
-
-		// quantidade de blocos na vertical e na horizontal
-		int vblocks = pow(numblocks, 0.5);
-		int hblocks = pow(numblocks, 0.5);
-
-		// vetores temporarios para blocos 8 x 8
-		unsigned char *tempin = malloc(64);
-		unsigned char *tempinv = malloc(64);
-		float *tempout = malloc(sizeof(float)*64);
-
-		// para cada bloco
-		for(i = 0; i < vblocks; i++){
-			for(j = 0; j < hblocks; j++){
-
-				// copia o bloco da entrada
-				for(k = 0; k < 8; k++){
-					for(l = 0; l < 8; l++){
-						tempin[k * 8 + l] = in[ i*(sizeof(input) / vblocks) + j*8 + k*8*hblocks + l ];
-					}
-				}
-
-				// aplica a tdc sobre o bloco
-				tdc(&tempout, &tempin);
-
-				// copia o bloco para a saida da tdc
-				for(k = 0; k < 8; k++){
-					for(l = 0; l < 8; l++){
-						out[ i*(sizeof(input) / vblocks) + j*8 + k*8*hblocks + l ] = tempout[k * 8 + l];
-					}
-				}
-
-				// aplica a inversa sobre o bloco
-				itdc(&tempinv, &tempout);
-
-				// copia o bloco para a saida da inversa
-				for(k = 0; k < 8; k++){
-					for(l = 0; l < 8; l++){
-						inv[ i*(sizeof(input) / vblocks) + j*8 + k*8*hblocks + l ] = tempinv[k * 8 + l];
-					}
-				}
-
-			} // proximo hblock
-		} // proximo vblock 
-
-	} // fim tdc
-
-		// conferindo se o tdc e a inversa deu certo
-	{
-		int i;
-		int diff;
-		for(i = 0; i < sizeof(input); i++){
-			if(in[i] != inv[i]){
-				diff = in[i] - inv[i];
-				// faixa de tolerancia de +/- 2 de diferenca
-				assert(diff > -2 && diff < 2);
-			}
-		}
-	}
+	tdc(&out, &in, sizeof(input));
+	itdc(&inv, &out, sizeof(input));
+	conf(&in, &inv, sizeof(input));
 
 	return 0;
 }
