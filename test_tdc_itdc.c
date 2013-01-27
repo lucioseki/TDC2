@@ -1,6 +1,9 @@
 /*
  * Compile com:
- * gcc test.c tdc.c -lm
+ * gcc test_tdc_itdc.c tdc.c -lm -o test_tdc_itdc
+ *
+ * Execute com:
+ * ./test_tdc_itdc
  *
  * */
 

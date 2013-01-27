@@ -1,6 +1,6 @@
 
-// gcc xdisplayitdc.c tdc.c -o xdisplayitdc -lm -lX11
-// ./xdisplayitdc lena512c.rawtdc
+// gcc test_frame_itdc.c frame_tdc.c tdc.c -o test_frame_itdc -lm -lX11
+// ./test_frame_itdc lena512c.rawtdc
 
 #include <stdio.h>
 #include <stdlib.h>

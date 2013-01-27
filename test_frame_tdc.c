@@ -1,9 +1,9 @@
 /*
  *	compile com
- *	gcc test_save.c frame_tdc.c tdc.c -lm -o test_save
+ *	gcc test_frame_tdc.c frame_tdc.c tdc.c -lm -o test_frame_tdc
  *
  *	execute com
- *	./test_save lena512c.raw 512 512
+ *	./test_frame_tdc lena512c.raw 512 512
  *
  * */
 
