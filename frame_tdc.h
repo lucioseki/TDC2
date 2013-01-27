@@ -3,7 +3,7 @@
 
 // estrutura para representar um pixel da imagem colorida
 typedef struct{
-	unsigned int red, green, blue;
+	unsigned char red, green, blue;
 }Image;
 
 // recebe um vetor de pixels e as dimensões de uma imagem

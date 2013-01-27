@@ -39,8 +39,8 @@ int main(int argc, char ** argv) {
 	fread(&IMAGE_WIDTH, sizeof(int), 1, fp);
 	fread(&IMAGE_HEIGHT, sizeof(int), 1, fp);
 
-	tdc = malloc(sizeof(Image) * IMAGE_WIDTH * IMAGE_HEIGHT);
-	fread(tdc, sizeof(Image), IMAGE_WIDTH * IMAGE_HEIGHT, fp);
+	tdc = malloc(sizeof(float) * 3 * IMAGE_WIDTH * IMAGE_HEIGHT);
+	fread(tdc, sizeof(float), 3 * IMAGE_WIDTH * IMAGE_HEIGHT, fp);
   fclose(fp);
 
 	// aplica a itdc 
@@ -77,10 +77,10 @@ int main(int argc, char ** argv) {
 	// Carrega os valores da itdc para exibir 
   for(m=0;m<IMAGE_HEIGHT;m++) {
     for(n=0;n<IMAGE_WIDTH;n++) {
-      ximage -> data[(m*4)*IMAGE_WIDTH+n*4] = (char) itdc[m*IMAGE_WIDTH+n].blue;
-      ximage -> data[(m*4)*IMAGE_WIDTH+n*4+1] = (char) itdc[m*IMAGE_WIDTH+n].green;
-      ximage -> data[(m*4)*IMAGE_WIDTH+n*4+2] = (char) itdc[m*IMAGE_WIDTH+n].red;
-      ximage -> data[(m*4)*IMAGE_WIDTH+n*4+3] = (char) 0;
+      ximage -> data[(m*4)*IMAGE_WIDTH+n*4] = itdc[m*IMAGE_WIDTH+n].blue;
+      ximage -> data[(m*4)*IMAGE_WIDTH+n*4+1] = itdc[m*IMAGE_WIDTH+n].green;
+      ximage -> data[(m*4)*IMAGE_WIDTH+n*4+2] = itdc[m*IMAGE_WIDTH+n].red;
+      ximage -> data[(m*4)*IMAGE_WIDTH+n*4+3] = 0;
       }
     }
 
