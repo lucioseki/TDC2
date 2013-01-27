@@ -1,3 +1,8 @@
+/*
+ * Implementação das funções TDC e ITDC sobre estruturas tipo Image.
+ *
+ * */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,7 +11,7 @@
 #include "frame_tdc.h"
 
 // recebe um vetor de pixels e as dimensões de uma imagem
-// joga no vetor output as tdcs de cada banda na sequencia R, G, B
+// salva no vetor output as TDCs de cada banda na sequencia R, G, B
 void frame_tdc(output, IMAGE_WIDTH, IMAGE_HEIGHT, input)
 	float **output;
 	int IMAGE_WIDTH;
@@ -50,8 +55,8 @@ void frame_tdc(output, IMAGE_WIDTH, IMAGE_HEIGHT, input)
 	free(blues);
 }
 
-// recebe um vetor das tdcs de cada banda na sequencia R, G, B
-// salva a itdc no vetor de pixels
+// recebe um vetor das TDCs de cada banda na sequencia R, G, B
+// salva a ITDC no vetor de pixels
 void frame_itdc(output, IMAGE_WIDTH, IMAGE_HEIGHT, input)
 	Image ** output;
 	int IMAGE_WIDTH;

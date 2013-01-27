@@ -1,4 +1,7 @@
 /*
+ * Aplica a TDC sobre a matriz, aplica a inversa e 
+ * compara a original com a inversa obtida.
+ *
  * Compile com:
  * gcc test_tdc_itdc.c tdc.c -lm -o test_tdc_itdc
  *

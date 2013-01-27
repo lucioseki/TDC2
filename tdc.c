@@ -1,3 +1,7 @@
+/*
+ * Implementacao das funcoes TDC e ITDC.
+ *
+ * */
 #ifndef TDC_H
 #define TDC_H
 
