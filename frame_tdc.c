@@ -49,3 +49,41 @@ void frame_tdc(output, IMAGE_WIDTH, IMAGE_HEIGHT, input)
 	free(greens);
 	free(blues);
 }
+
+// recebe um vetor das tdcs de cada banda na sequencia R, G, B
+// salva a itdc no vetor de pixels
+void frame_itdc(output, IMAGE_WIDTH, IMAGE_HEIGHT, input)
+	Image ** output;
+	int IMAGE_WIDTH;
+	int IMAGE_HEIGHT;
+	float **input;
+{
+	unsigned char *reditdc = malloc(IMAGE_WIDTH * IMAGE_HEIGHT);
+	unsigned char *greenitdc = malloc(IMAGE_WIDTH * IMAGE_HEIGHT);
+	unsigned char *blueitdc = malloc(IMAGE_WIDTH * IMAGE_HEIGHT);
+	float *p;
+	int m, n;
+
+	// aplica a ITDC para cada banda
+	p = *input;
+	itdc(&reditdc, &p, IMAGE_WIDTH * IMAGE_HEIGHT);
+
+	p += IMAGE_WIDTH * IMAGE_HEIGHT;
+	itdc(&greenitdc, &p, IMAGE_WIDTH * IMAGE_HEIGHT);
+
+	p += IMAGE_WIDTH * IMAGE_HEIGHT;
+	itdc(&blueitdc, &p, IMAGE_WIDTH * IMAGE_HEIGHT);
+	
+	// recupera da ITDC
+	for(m=0;m<IMAGE_HEIGHT;m++) {
+		for(n=0;n<IMAGE_WIDTH;n++) {
+			(*output)[m*IMAGE_WIDTH+n].red = (unsigned char) reditdc[m*IMAGE_WIDTH+n];
+			(*output)[m*IMAGE_WIDTH+n].green = (unsigned char) greenitdc[m*IMAGE_WIDTH+n];
+			(*output)[m*IMAGE_WIDTH+n].blue = (unsigned char) blueitdc[m*IMAGE_WIDTH+n];
+		}
+	}
+
+	free(reditdc);
+	free(greenitdc);
+	free(blueitdc);
+}

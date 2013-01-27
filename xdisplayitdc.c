@@ -6,16 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
 #include "tdc.h"
+#include "frame_tdc.h"
 
 #include <X11/Xlib.h>
 
 #define EventMask (ExposureMask)
 
-struct Image {
-     unsigned int red, green, blue;
-     };
-     
 int main(int argc, char ** argv) {
   FILE                  * fp;
   Display               * display;
@@ -28,9 +26,7 @@ int main(int argc, char ** argv) {
   int                   IMAGE_HEIGHT, IMAGE_WIDTH;
   int dim;
 
-	float *redtdc;
-	float *greentdc;
-	float *bluetdc;
+	float *tdc;
 
   fp = fopen(argv[1],"rb");
 
@@ -39,23 +35,15 @@ int main(int argc, char ** argv) {
 	fread(&IMAGE_HEIGHT, sizeof(int), 1, fp);
 
 	dim = IMAGE_WIDTH * IMAGE_HEIGHT;
-	redtdc = malloc(sizeof(float) * dim);
-	greentdc = malloc(sizeof(float) * dim);
-	bluetdc = malloc(sizeof(float) * dim);
+	tdc = malloc(sizeof(Image) * dim);
 
-	fread(redtdc, sizeof(float), dim, fp);
-	fread(greentdc, sizeof(float), dim, fp);
-	fread(bluetdc, sizeof(float), dim, fp);
+	fread(tdc, sizeof(Image), dim, fp);
   fclose(fp);
 
-	unsigned char *reditdc = malloc(dim);
-	unsigned char *greenitdc = malloc(dim);
-	unsigned char *blueitdc = malloc(dim);
+	Image *itdc = malloc(sizeof(Image) * dim);
 
 	// aplica a ITDC para cada banda
-	itdc(&reditdc, &redtdc, dim);
-	itdc(&greenitdc, &greentdc, dim);
-	itdc(&blueitdc, &bluetdc, dim);
+	frame_itdc(&itdc, IMAGE_WIDTH, IMAGE_HEIGHT, &tdc);
 
   if ((display = XOpenDisplay(NULL)) == NULL) {
      printf("Incapaz de conectar ao display...\n");
@@ -85,9 +73,9 @@ int main(int argc, char ** argv) {
 	// recupera da ITDC
   for(m=0;m<IMAGE_HEIGHT;m++) {
     for(n=0;n<IMAGE_WIDTH;n++) {
-      ximage -> data[(m*4)*IMAGE_WIDTH+n*4] = (char) blueitdc[m*IMAGE_WIDTH+n];
-      ximage -> data[(m*4)*IMAGE_WIDTH+n*4+1] = (char) greenitdc[m*IMAGE_WIDTH+n];
-      ximage -> data[(m*4)*IMAGE_WIDTH+n*4+2] = (char) reditdc[m*IMAGE_WIDTH+n];
+      ximage -> data[(m*4)*IMAGE_WIDTH+n*4] = (char) itdc[m*IMAGE_WIDTH+n].blue;
+      ximage -> data[(m*4)*IMAGE_WIDTH+n*4+1] = (char) itdc[m*IMAGE_WIDTH+n].green;
+      ximage -> data[(m*4)*IMAGE_WIDTH+n*4+2] = (char) itdc[m*IMAGE_WIDTH+n].red;
       ximage -> data[(m*4)*IMAGE_WIDTH+n*4+3] = (char) 0;
       }
     }
@@ -96,13 +84,7 @@ int main(int argc, char ** argv) {
 
   sleep(10);
   
-	free(redtdc);
-	free(greentdc);
-	free(bluetdc);
-
-	free(reditdc);
-	free(greenitdc);
-	free(blueitdc);
-
+	free(tdc);
+	free(itdc);
   return 0;
   }
